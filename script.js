@@ -10,25 +10,21 @@ const bands = [
     'Counterparts', 
     'Oh, Sleeper', 
     'A Skylit Drive', 
-    'Anywhere But Here', 
-    'An Old Dog'
+    'An Old Dog', 
+    'Anywhere But Here'
 ];
 
 // Words to ignore while sorting
 const ignoreWords = ['a', 'an', 'the'];
 
-// Function to strip ignored words from the beginning of a string
-function strip(word) {
-    return word.replace(/^(a |an |the )/i, '').trim();
+// Function to strip ignored words for sorting
+function stripWord(band) {
+    return band.replace(/^(a |an |the )/i, '').trim();
 }
 
-// Sort the bands, ignoring the specified words
-const sortedBands = bands.sort((a, b) => (strip(a) > strip(b) ? 1 : -1));
+// Sort the bands ignoring specified words
+const sortedBands = bands.sort((a, b) => stripWord(a).localeCompare(stripWord(b)));
 
-// Populate the unordered list with sorted articles
+// Get the list element and render sorted bands
 const bandList = document.getElementById('band');
-sortedBands.forEach(band => {
-    const li = document.createElement('li');
-    li.textContent = band;
-    bandList.appendChild(li);
-});
+bandList.innerHTML = sortedBands.map(band => `<li>${band}</li>`).join('');
